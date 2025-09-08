@@ -87,8 +87,8 @@
 
       // Determinar qué imagen usar
       const backgroundImage = isMobile 
-        ? 'assets/fondo-mobile.jpg'  // Tu Recurso para móvil
-        : 'assets/fondo-desktop.jpg'; // Tu Recurso para desktop
+        ? 'assets/fondo-mobile.svg'  // Tu Recurso para móvil
+        : 'assets/fondo-desktop.svg'; // Tu Recurso para desktop
 
       // Aplicar la imagen de fondo
       body.style.backgroundImage = `url('${backgroundImage}')`;
@@ -114,7 +114,7 @@
 
     // Precargar imágenes para transición suave
     const preloadImages = () => {
-      const images = ['assets/fondo-mobile.jpg', 'assets/fondo-desktop.jpg'];
+      const images = ['assets/fondo-mobile.svg', 'assets/fondo-desktop.svg'];
       images.forEach(src => {
         const img = new Image();
         img.src = src;
@@ -126,4 +126,5 @@
   </script>
 </body>
 </html>
+
 
