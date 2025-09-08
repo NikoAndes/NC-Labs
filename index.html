@@ -2,22 +2,23 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <!-- 1) Viewport correcto para responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NC Labs — Sitio en construcción</title>
   <meta name="description" content="Estamos preparando algo épico. Escríbenos y cotiza por WhatsApp." />
-  <link rel="icon" href="assets/btn-wa.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/btn-wa.png" type="image/png" />
   <style>
-    /* 2) Fondo responsive a pantalla completa */
-    html, body { height: 100%; margin: 0; }
+    html, body { height: 100%; margin: 0; padding: 0; }
     body {
-      background: url('assets/fondo.svg') center / cover no-repeat fixed;
-      /* cover + center mantiene el foco y llena la pantalla en cualquier tamaño */
-      background-color: #2b204a; /* color de apoyo mientras carga */
+      background-color: #2b204a;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
       min-height: 100dvh;
     }
 
-    /* Layout para posicionar el botón arriba a la derecha */
+    /* Botón WhatsApp */
     .wa {
       position: fixed;
       top: 16px;
@@ -25,31 +26,103 @@
       z-index: 10;
     }
     .wa img {
-      width: 168px;   /* desktop */
+      width: 160px;
       height: auto;
       display: block;
+      transition: transform 0.2s ease;
+    }
+    .wa img:hover {
+      transform: scale(1.05);
     }
 
-    /* 3) Media queries móviles */
+    /* Media queries como fallback */
     @media (max-width: 768px) {
-      .wa { top: 12px; right: 12px; }
-      .wa img { width: 140px; }
+      .wa { 
+        top: 12px; 
+        right: 12px; 
+      }
+      .wa img { 
+        width: 130px; 
+      }
     }
     @media (max-width: 480px) {
-      .wa { top: 10px; right: 10px; }
-      .wa img { width: 122px; } /* se adapta a pantallas pequeñas */
+      .wa { 
+        top: 10px; 
+        right: 10px; 
+      }
+      .wa img { 
+        width: 110px; 
+      }
     }
-    /* Accesibilidad al foco del enlace */
-    .wa a:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(37,211,102,.45); border-radius: 8px; }
+
+    /* Accesibilidad */
+    .wa a:focus-visible { 
+      outline: none; 
+      box-shadow: 0 0 0 3px rgba(37,211,102,.6); 
+      border-radius: 12px; 
+    }
+
+    /* Loading state */
+    body.loading {
+      background-image: none !important;
+    }
   </style>
 </head>
-<body aria-label="NC Labs. Sitio en construcción. Escríbenos por WhatsApp para cotizar.">
+<body class="loading" aria-label="NC Labs. Sitio en construcción. Escríbenos por WhatsApp para cotizar.">
+
   <!-- Botón WhatsApp -->
   <div class="wa">
-    <a href="https://wa.me/573001112233?text=Hola%20NC%20Labs%2C%20quiero%20cotizar"
-       target="_blank" rel="noopener">
-      <img src="assets/btn-wa.svg" alt="WhatsApp: Cotizar" />
+    <a href="https://wa.me/573001112233?text=Hola%20NC%20Labs%2C%20quiero%20cotizar%20un%20proyecto"
+       target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+      <img src="assets/btn-wa.png" alt="WhatsApp: Cotizar" />
     </a>
   </div>
+
+  <script>
+    // Función para detectar el tamaño de pantalla y cambiar imagen
+    function setResponsiveBackground() {
+      const body = document.body;
+      const screenWidth = window.innerWidth;
+      const isMobile = screenWidth <= 768;
+
+      // Determinar qué imagen usar
+      const backgroundImage = isMobile 
+        ? 'assets/fondo-mobile.jpg'  // Tu Recurso para móvil
+        : 'assets/fondo-desktop.jpg'; // Tu Recurso para desktop
+
+      // Aplicar la imagen de fondo
+      body.style.backgroundImage = `url('${backgroundImage}')`;
+
+      // Remover clase loading después de aplicar el fondo
+      body.classList.remove('loading');
+
+      console.log(`Pantalla: ${screenWidth}px - Usando: ${isMobile ? 'Mobile' : 'Desktop'} background`);
+    }
+
+    // Ejecutar al cargar la página
+    document.addEventListener('DOMContentLoaded', setResponsiveBackground);
+
+    // Ejecutar al redimensionar la ventana (para cambios de orientación)
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(setResponsiveBackground, 250);
+    });
+
+    // Ejecutar inmediatamente para evitar delay
+    setResponsiveBackground();
+
+    // Precargar imágenes para transición suave
+    const preloadImages = () => {
+      const images = ['assets/fondo-mobile.jpg', 'assets/fondo-desktop.jpg'];
+      images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    };
+
+    // Precargar después de 1 segundo
+    setTimeout(preloadImages, 1000);
+  </script>
 </body>
 </html>
