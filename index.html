@@ -2,58 +2,54 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
+  <!-- 1) Viewport correcto para responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NC Labs — Sitio en construcción</title>
   <meta name="description" content="Estamos preparando algo épico. Escríbenos y cotiza por WhatsApp." />
-  <link rel="icon" href="btn-wa.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/btn-wa.svg" type="image/svg+xml" />
   <style>
-    /* Fondo a pantalla completa */
+    /* 2) Fondo responsive a pantalla completa */
     html, body { height: 100%; margin: 0; }
     body {
-      background: url('fondo.svg') center / cover no-repeat fixed; /* cover y centrado */
-      /* fallback color mientras carga */
-      background-color: #2b204a;
-      display: flex;
-      align-items: flex-start;   /* botón arriba a la derecha como tu mock */
-      justify-content: flex-end;
+      background: url('assets/fondo.svg') center / cover no-repeat fixed;
+      /* cover + center mantiene el foco y llena la pantalla en cualquier tamaño */
+      background-color: #2b204a; /* color de apoyo mientras carga */
+      min-height: 100dvh;
     }
-    .wrap {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-    /* Contenedor del botón */
+
+    /* Layout para posicionar el botón arriba a la derecha */
     .wa {
-      position: absolute;
+      position: fixed;
       top: 16px;
       right: 16px;
-      display: inline-block;
+      z-index: 10;
     }
     .wa img {
-      width: 165px; /* ajusta al tamaño de tu Recurso-4 */
+      width: 168px;   /* desktop */
       height: auto;
       display: block;
     }
-    /* Accesibilidad / foco */
-    .wa a { outline: none; }
-    .wa a:focus-visible { box-shadow: 0 0 0 3px rgba(37,211,102,.5); border-radius: 8px; }
-    /* Responsivo: botón más pequeño en móvil */
-    @media (max-width: 480px) {
-      .wa img { width: 130px; }
+
+    /* 3) Media queries móviles */
+    @media (max-width: 768px) {
       .wa { top: 12px; right: 12px; }
+      .wa img { width: 140px; }
     }
+    @media (max-width: 480px) {
+      .wa { top: 10px; right: 10px; }
+      .wa img { width: 122px; } /* se adapta a pantallas pequeñas */
+    }
+    /* Accesibilidad al foco del enlace */
+    .wa a:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(37,211,102,.45); border-radius: 8px; }
   </style>
 </head>
-<body>
-  <div class="wrap" role="img" aria-label="NC Labs. Sitio en construcción. Escríbenos por WhatsApp para cotizar.">
-    <div class="wa">
-      <a href="https://wa.me/573001112233?text=Hola%20NC%20Labs%2C%20quiero%20cotizar"
-         target="_blank" rel="noopener">
-        <img src="btn-wa.svg" alt="WhatsApp: Cotizar" />
-      </a>
-    </div>
+<body aria-label="NC Labs. Sitio en construcción. Escríbenos por WhatsApp para cotizar.">
+  <!-- Botón WhatsApp -->
+  <div class="wa">
+    <a href="https://wa.me/573001112233?text=Hola%20NC%20Labs%2C%20quiero%20cotizar"
+       target="_blank" rel="noopener">
+      <img src="assets/btn-wa.svg" alt="WhatsApp: Cotizar" />
+    </a>
   </div>
 </body>
 </html>
-
-
